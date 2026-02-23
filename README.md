@@ -11,7 +11,7 @@ extracts page context and lets a local language model interpret,
 categorize, and format the information into clean tables and summaries.
 
 The goal is to demonstrate integration of multiple modern tools into a
-single working pipeline --- not just scraping, but automated
+single working pipeline - not just scraping, but automated
 understanding of web content.
 
 ---
@@ -93,11 +93,10 @@ LLM Reasoning
 Structured Tables / Summaries
 ```
 
-Unlike traditional scrapers, no hardcoded CSS/XPath selectors are required.\
+Unlike traditional scrapers, no site-specific CSS/XPath selectors are required.\
 The parsing logic is prompt-driven rather than layout-driven, making the system resilient to moderate UI changes.
 
-The LLM is used only after scraping, meaning the system works on dynamic
-websites without custom parsing rules for each page.
+The LLM receives only cleaned textual content extracted from the page, not the raw HTML, preventing markup noise from affecting reasoning.
 
 ---
 
@@ -200,6 +199,19 @@ These websites:
 
 This system converts messy listings into clean comparable data.
 
+---
+
+### Source/Test Website Used
+
+Example dynamic website used for testing:
+```text
+https://www.magicbricks.com/property-for-rent/residential-paying-guest?cityName=Bangalore
+```
+
+![Target Website](images/website_to_scrape.jpg)
+
+---
+
 ### Step 1 — Launching the Application
 
 The app starts a browser instance and begins scraping dynamic content.
@@ -208,49 +220,39 @@ The app starts a browser instance and begins scraping dynamic content.
 
 ---
 
-### Step 2 — Providing the Target Website
+### Step 2 — Extracted DOM Content (After Providing Target Website)
 
-User provides the listing page URL inside the Streamlit UI.
+User provides the listing page URL inside the Streamlit UI.\
+The system extracts meaningful textual content from the loaded webpage before AI processing.\
+URL:
+```text
+https://www.magicbricks.com/property-for-rent/residential-paying-guest?cityName=Bangalore
+```
 
-![Enter URL](images/Web-Scraper-Demo-Pic1.jpg)
-
----
-
-### Step 3 — Viewing Extracted DOM Content
-
-The system extracts meaningful textual content from the loaded webpage before AI processing.
-
-![DOM Extraction](images/Web-Scraper-Demo-Pic2.jpg)
+![Enter URL - DOM Extraction](images/Web-Scraper-Demo-Pic1.jpg)
 
 ---
 
-### Step 4 — Natural Language Query
+### Step 3 — Natural Language Query
 
 Instead of writing selectors, the user describes the requirement in plain English.\
 Query used:
 
 ```text
-Can you please collect all of the relevant property information and organize it in a table
+Can you please collect all of the relevant property information and organize it into a table
 ```
 
-![User Query](images/Web-Scraper-Demo-Pic3.jpg)
+![User Query](images/Web-Scraper-Demo-Pic2.jpg)
 
 ---
 
-### Step 5 — AI Structured Output
+### Step 4 — AI Structured Output
 
 The local LLM organizes the extracted data into structured tables that can be compared directly.
 
-![Structured Table 1](images/Web-Scraper-Demo-Pic4.jpg)
-![Structured Table 2](images/Web-Scraper-Demo-Pic5.jpg)
-
----
-
-### Source Website
-
-Example dynamic website used for testing:
-
-![Target Website](images/website_to_scrape.jpg)
+![Structured Table 1](images/Web-Scraper-Demo-Pic3.jpg)
+![Structured Table 2](images/Web-Scraper-Demo-Pic4.jpg)
+![Structured Table 3](images/Web-Scraper-Demo-Pic5.jpg)
 
 ---
 
